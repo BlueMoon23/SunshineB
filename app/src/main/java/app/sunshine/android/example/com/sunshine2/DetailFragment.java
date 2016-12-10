@@ -131,7 +131,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         Log.v(LOG_TAG, "In onCreateLoader");
         Intent intent = getActivity().getIntent();
-        if(intent == null){
+        if(intent == null || intent.getData() == null){
             return null;
         }
 
@@ -150,7 +150,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
         if(data != null && data.moveToFirst()){
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-            mIconView.setImageResource(R.mipmap.ic_launcher);
+            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 
             //Read date from cursor and update views of the week and date.
             long date = data.getLong(COL_WEATHER_DATE);
